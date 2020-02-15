@@ -48,6 +48,10 @@ public class PlayerMovement : MonoBehaviour
     /// <param name="forceDir">The direction to move in.</param>
     private void ApplyMoveInput(Vector3 forceDir)
     {
-        rb.velocity = Vector3.ClampMagnitude(rb.velocity + forceDir * accelSpeed, maxVelocity);
+        //Get the velocity without a y component, make a clamped speed vector, and apply it to velocity.
+        //This effectively ignores the y axis of velocity, allowing normal gravity things to happen.
+        Vector3 velSubY = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+        Vector3 newVel = Vector3.ClampMagnitude(velSubY + forceDir * accelSpeed, maxVelocity);
+        rb.velocity = new Vector3(newVel.x, rb.velocity.y, newVel.z);
     }
 }
