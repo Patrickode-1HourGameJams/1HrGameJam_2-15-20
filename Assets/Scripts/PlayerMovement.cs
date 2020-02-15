@@ -14,22 +14,31 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        //If the WASD keys are released, jump in the corresponding direction.
-        if (Input.GetKeyUp(KeyCode.W))
+        //Set up a movement vector.
+        Vector3 moveDir = Vector3.zero;
+
+        //If the WASD keys are held, add the corresponding direction to the move direction.
+        if (Input.GetKey(KeyCode.W))
         {
-            ApplyMoveInput(Vector3.forward);
+            moveDir += Vector3.forward;
         }
-        else if (Input.GetKeyUp(KeyCode.S))
+        if (Input.GetKey(KeyCode.A))
         {
-            ApplyMoveInput(Vector3.down);
+            moveDir += Vector3.left;
         }
-        else if (Input.GetKeyUp(KeyCode.D))
+        if (Input.GetKey(KeyCode.S))
         {
-            ApplyMoveInput(Vector3.right);
+            moveDir += Vector3.back;
         }
-        else if (Input.GetKeyUp(KeyCode.A))
+        if (Input.GetKey(KeyCode.D))
         {
-            ApplyMoveInput(Vector3.left);
+            moveDir += Vector3.right;
+        }
+
+        //Now apply that move direction to actual movement.
+        if (moveDir != Vector3.zero)
+        {
+            ApplyMoveInput(moveDir);
         }
     }
 
